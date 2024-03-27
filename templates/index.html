@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>FakeBook</title>
+</head>
+<body>
+    <h1>Pha Ke Búc</h1>
+    <ul>
+        {% for message in messages %}
+            <div class="message">
+                {{ message['content']}}
+            </div>
+        {% endfor %}
+    </ul>
+    <form action="{{ url_for('send_message') }}" method="POST">
+        <input type="text" name="message" placeholder="Enter your message">
+        <button type="submit">Send</button>
+    </form>
+
+</body>
+</html>
