@@ -7,18 +7,24 @@
     <title>FakeBook</title>
 </head>
 <body>
-    <h1>Pha Ke Búc</h1>
-    <ul>
-        {% for message in messages %}
-            <div class="message">
-                {{ message['content']}}
-            </div>
-        {% endfor %}
-    </ul>
-    <form action="{{ url_for('send_message') }}" method="POST">
-        <input type="text" name="message" placeholder="Enter your message">
-        <button type="submit">Send</button>
-    </form>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            {% for message in messages %}
+                <div class="message {% if message['from'] == 'user' %}user{% endif %}">
+                    {{ message['content'] }}
+                </div>
+            {% endfor %}
+        </div>
+        <form class="message-form" action="{{ url_for('send_message') }}" method="POST">
+            <input class="message-input" type="text" name="message" placeholder="Type your message here">
+            <button class="send-button" type="submit">Send</button>
+        </form>
+    </div>
 
+    <script>
+        // Scroll to the bottom of the chat box
+        var chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
 </body>
 </html>
