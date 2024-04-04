@@ -53,3 +53,13 @@ body {
   cursor: pointer;
   margin-left: 10px;
 }
+
+.sign-out-button {
+  padding: 10px 20px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}

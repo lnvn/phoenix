@@ -2,15 +2,16 @@ from flask import Flask, redirect, request, render_template
 from pymongo.mongo_client import MongoClient
 import os
 
-# uri = "mongodb://root:root@localhost/"
-uri = "mongodb://root:root@localhost:27017/"
-# uri = os.environ.get('MONGO_URI')
-client = MongoClient(uri)
+# uri = "mongodb://root:root@localhost:27017/"
 
-# client = MongoClient('db',
-#                      username='root',
-#                      password='root',
-#                      )
+# uri = os.environ.get('MONGO_URI')
+# client = MongoClient(uri)
+
+# use with docker-compose.yml
+client = MongoClient('db',
+                     username='root',
+                     password='root',
+                     )
 
 # ----- Check DB connection and authentication
 # try:
@@ -37,6 +38,10 @@ def send_message():
     if content:
         db_collection.insert_one({'content': content})
     return redirect('/')
+
+@app.route('/sign_out')
+def sign_out():
+    return redirect('/oauth2/sign_out')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
