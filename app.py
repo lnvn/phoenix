@@ -34,9 +34,10 @@ def index():
 
 @app.route('/send', methods=['POST'])
 def send_message():
-    content = request.form['message']
-    if content:
-        db_collection.insert_one({'content': content})
+    username = request.headers.get('X-Forwarded-User')
+    message = request.form['message']
+    if message:
+        db_collection.insert_one({'message': message, 'username': username})
     return redirect('/')
 
 @app.route('/sign_out')
