@@ -1,0 +1,14 @@
+{
+  "name": "frontend-microservice",
+  "version": "1.0.0",
+  "description": "A simple frontend microservice serving static content.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
