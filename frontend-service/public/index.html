@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Microservice</title>
+</head>
+<body>
+    <h1>Message Console</h1>
+    <form id="messageForm">
+        <label for="message">Enter your message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Save Message</button>
+    </form>
+    <h2>Saved Messages</h2>
+    <ul id="messagesList"></ul>
+
+    <script>
+        const backendUrl = 'http://localhost:5000'; // Replace with backend service URL in Kubernetes
+
+        document.getElementById('messageForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+
+            try {
+                // Save the message
+                const response = await fetch(`${backendUrl}/messages`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message }),
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to save message');
+                    return;
+                }
+
+                // Reload messages
+                loadMessages();
+                document.getElementById('message').value = '';
+            } catch (err) {
+                alert('Failed to connect to the backend');
+            }
+        });
+
+        async function loadMessages() {
+            try {
+                const response = await fetch(`${backendUrl}/messages`);
+                const messages = await response.json();
+                const messagesList = document.getElementById('messagesList');
+                messagesList.innerHTML = '';
+
+                messages.forEach((msg) => {
+                    const li = document.createElement('li');
+                    li.textContent = msg;
+                    messagesList.appendChild(li);
+                });
+            } catch (err) {
+                alert('Failed to load messages');
+            }
+        }
+
+        // Load messages on page load
+        loadMessages();
+    </script>
+</body>
+</html>
